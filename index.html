@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Newsletter Signup</title>
   <link rel="stylesheet" href="styles.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
@@ -17,14 +18,15 @@
           <li>✅ Measuring to ensure updates are a success</li>
           <li>✅ And much more!</li>
         </ul>
-        <form id="newsletter-form">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" placeholder="email@company.com" required/>
-          <button type="submit">Subscribe to monthly newsletter</button>
+        <form id="newsletter-form" novalidate>
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" placeholder="email@company.com" required />
+          <p id="error-msg" class="error hidden">Valid email required</p>
+          <button type="submit" id="subscribe-btn">Subscribe to monthly newsletter</button>
         </form>
       </div>
       <div class="right">
-        <img src="graph.png" alt=""/>
+        <img src="graph.png" alt="Graph illustration"/>
       </div>
     </div>
 
@@ -32,10 +34,10 @@
       <div class="success-icon">✅</div>
       <h2>Thanks for subscribing!</h2>
       <p>
-        A confirmation email has been sent to <span id="user-email"></span>. <br />
+        A confirmation email has been sent to <span id="user-email"></span>.
         Please open it and click the button inside to confirm your subscription.
       </p>
-      <button onclick="dismissMessage()">Dismiss message</button>
+      <button id="dismiss-btn">Dismiss message</button>
     </div>
 
     <footer>
@@ -50,19 +52,34 @@
     const subscribeCard = document.getElementById('subscribe-card');
     const successCard = document.getElementById('success-card');
     const userEmailSpan = document.getElementById('user-email');
+    const dismissBtn = document.getElementById('dismiss-btn');
+    const errorMsg = document.getElementById('error-msg');
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      userEmailSpan.textContent = emailInput.value;
+      const email = emailInput.value.trim();
+      const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!validEmail.test(email)) {
+        errorMsg.classList.remove('hidden');
+        emailInput.classList.add('input-error');
+        return;
+      }
+
+      errorMsg.classList.add('hidden');
+      emailInput.classList.remove('input-error');
+      userEmailSpan.textContent = email;
       subscribeCard.classList.add('hidden');
       successCard.classList.remove('hidden');
     });
 
-    function dismissMessage() {
+    dismissBtn.addEventListener('click', () => {
       successCard.classList.add('hidden');
       subscribeCard.classList.remove('hidden');
       emailInput.value = '';
-    }
+      errorMsg.classList.add('hidden');
+      emailInput.classList.remove('input-error');
+    });
   </script>
 </body>
 </html>
