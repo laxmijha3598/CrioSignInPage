@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Newsletter Signup</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <div class="card" id="subscribe-card">
+      <div class="left">
+        <h1>Stay updated!</h1>
+        <p>Join 60,000+ product managers receiving monthly updates on:</p>
+        <ul>
+          <li>✅ Product discovery and building what matters</li>
+          <li>✅ Measuring to ensure updates are a success</li>
+          <li>✅ And much more!</li>
+        </ul>
+        <form id="newsletter-form">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="email@company.com" required/>
+          <button type="submit">Subscribe to monthly newsletter</button>
+        </form>
+      </div>
+      <div class="right">
+        <img src="graph.png" alt=""/>
+      </div>
+    </div>
+
+    <div class="card success hidden" id="success-card">
+      <div class="success-icon">✅</div>
+      <h2>Thanks for subscribing!</h2>
+      <p>
+        A confirmation email has been sent to <span id="user-email"></span>. <br />
+        Please open it and click the button inside to confirm your subscription.
+      </p>
+      <button onclick="dismissMessage()">Dismiss message</button>
+    </div>
+
+    <footer>
+      Challenge by <a href="https://crio.do" target="_blank">Crio.Do</a>.
+      Coded by <span class="coder">Laxmi Jha</span>.
+    </footer>
+  </div>
+
+  <script>
+    const form = document.getElementById('newsletter-form');
+    const emailInput = document.getElementById('email');
+    const subscribeCard = document.getElementById('subscribe-card');
+    const successCard = document.getElementById('success-card');
+    const userEmailSpan = document.getElementById('user-email');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      userEmailSpan.textContent = emailInput.value;
+      subscribeCard.classList.add('hidden');
+      successCard.classList.remove('hidden');
+    });
+
+    function dismissMessage() {
+      successCard.classList.add('hidden');
+      subscribeCard.classList.remove('hidden');
+      emailInput.value = '';
+    }
+  </script>
+</body>
+</html>
