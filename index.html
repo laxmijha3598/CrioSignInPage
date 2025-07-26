@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="styles.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="main">
   <div class="container">
-    <div class="card" id="subscribe-card">
+    <div class="card sign-up-form" id="subscribe-card">
       <div class="left">
         <h1>Stay updated!</h1>
         <p>Join 60,000+ product managers receiving monthly updates on:</p>
@@ -21,8 +21,8 @@
         <form id="newsletter-form" novalidate>
           <label for="email">Email address</label>
           <input type="email" id="email" name="email" placeholder="email@company.com" required />
-          <p id="error-msg" class="error hidden">Valid email required</p>
-          <button type="submit" id="subscribe-btn">Subscribe to monthly newsletter</button>
+          <em id="error-msg" class="error hidden">Valid email required.</em>
+          <button type="submit" class="sub-btn">Subscribe to monthly newsletter</button>
         </form>
       </div>
       <div class="right">
@@ -32,15 +32,15 @@
 
     <div class="card success hidden" id="success-card">
       <div class="success-icon">✅</div>
-      <h2>Thanks for subscribing!</h2>
-      <p>
+      <h2 class="thanks-for-sub">Thanks for subscribing!</h2>
+      <p class="success-text">
         A confirmation email has been sent to <span id="user-email"></span>.
         Please open it and click the button inside to confirm your subscription.
       </p>
-      <button id="dismiss-btn">Dismiss message</button>
+      <button class="dismiss-btn" id="dismiss-btn">Dismiss message</button>
     </div>
 
-    <footer>
+    <footer class="footer">
       Challenge by <a href="https://crio.do" target="_blank">Crio.Do</a>.
       Coded by <span class="coder">Laxmi Jha</span>.
     </footer>
@@ -63,11 +63,18 @@
       if (!validEmail.test(email)) {
         errorMsg.classList.remove('hidden');
         emailInput.classList.add('input-error');
+        emailInput.style.borderColor = 'rgb(255, 99, 71)';
+        emailInput.style.color = 'rgb(255, 99, 71)';
+        emailInput.style.backgroundColor = 'rgba(255, 99, 71, 0.6)';
         return;
       }
 
+      // Simulate page navigation to success.html
+      window.history.pushState({}, '', 'success.html');
+
       errorMsg.classList.add('hidden');
       emailInput.classList.remove('input-error');
+      emailInput.style = '';
       userEmailSpan.textContent = email;
       subscribeCard.classList.add('hidden');
       successCard.classList.remove('hidden');
@@ -79,6 +86,8 @@
       emailInput.value = '';
       errorMsg.classList.add('hidden');
       emailInput.classList.remove('input-error');
+      emailInput.style = '';
+      window.history.pushState({}, '', 'index.html');
     });
   </script>
 </body>
